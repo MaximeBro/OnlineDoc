@@ -1,5 +1,8 @@
 package fr.ecareus.docshare.ui;
 
+import fr.ecareus.docshare.ui.panels.MainPage;
+import fr.ecareus.docshare.ui.shared.DialogFrame;
+import fr.ecareus.docshare.ui.panels.SessionPanel;
 import fr.ecareus.docshare.ui.shared.AppBar;
 
 import javax.swing.*;
@@ -21,7 +24,7 @@ public class FrameManager {
         this.frame.setUndecorated(true);
 
         this.frame.setSize(new Dimension(1280, 720));
-        this.frame.setJMenuBar(new AppBar(this.frame));
+        this.frame.setJMenuBar(new AppBar(this));
 
         this.frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
@@ -43,5 +46,13 @@ public class FrameManager {
         });
 
         this.frame.setVisible(true);
+    }
+
+    public JFrame getCurrentFrame() {
+        return this.frame;
+    }
+
+    public void showSessionDialog() {
+        DialogFrame dialog = new DialogFrame<SessionPanel>(this.frame, SessionPanel.class);
     }
 }

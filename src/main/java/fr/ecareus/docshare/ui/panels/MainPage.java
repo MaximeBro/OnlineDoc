@@ -1,4 +1,4 @@
-package fr.ecareus.docshare.ui;
+package fr.ecareus.docshare.ui.panels;
 
 import javax.swing.*;
 
