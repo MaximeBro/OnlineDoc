@@ -3,26 +3,25 @@ package fr.ecareus.docshare.ui.shared;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-public class DialogFrame<T> {
-    private final JFrame frame;
+public class DialogFrame<T> extends JDialog implements ICentered {
     private final JFrame parent;
     private T panel;
     private int mouseX, mouseY;
 
     // Fully dynamic class that acts as a Dialog
-    public DialogFrame(JFrame parent, Class panel) {
+    public DialogFrame(JFrame parent, Class panel, boolean modal) {
+        super(parent, modal);
         this.parent = parent;
-        this.frame = new JFrame();
-        this.frame.setUndecorated(true);
-        this.frame.setSize(new Dimension(720, 480));
+        this.setUndecorated(true);
+        this.setSize(new Dimension(720, 480));
+        this.setLocation(this.getCenterLocation(720, 480));
         try {
             Class<?> panelClass = Class.forName(panel.getName());
-            Method setParent = panelClass.getMethod("setParent", JFrame.class);
+            Method setParent = panelClass.getMethod("setParent", JDialog.class);
             this.panel = (T) panelClass.getDeclaredConstructor().newInstance();
-            setParent.invoke(this.panel, this.frame);
+            setParent.invoke(this.panel, this);
 
             ((JPanel)this.panel).addMouseListener(new MouseAdapter() {
                 @Override
@@ -35,13 +34,13 @@ public class DialogFrame<T> {
             ((JPanel)this.panel).addMouseMotionListener(new MouseMotionAdapter() {
                 @Override
                 public void mouseDragged(MouseEvent e) {
-                    frame.setLocation(frame.getX() + e.getX() - mouseX,  frame.getY() + e.getY() - mouseY);
+                    DialogFrame.this.setLocation(DialogFrame.this.getX() + e.getX() - mouseX,  DialogFrame.this.getY() + e.getY() - mouseY);
                 }
             });
 
-            this.frame.add((JPanel)this.panel);
-        } catch (NullPointerException | NoSuchMethodException | InvocationTargetException | InstantiationException | ClassNotFoundException | IllegalAccessException e) { e.printStackTrace(); }
+            this.add((Component) this.panel);
+        } catch (Exception e) { e.printStackTrace(); }
 
-        this.frame.setVisible(true);
+        this.setVisible(true);
     }
 }
