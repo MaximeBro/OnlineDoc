@@ -1,2 +1,2 @@
 
-Copyright (C) 2023 Maxime Brochard
+Copyright (C) 2023 ECAREUS
