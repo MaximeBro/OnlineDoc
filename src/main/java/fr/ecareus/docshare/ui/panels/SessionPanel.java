@@ -3,7 +3,6 @@ package fr.ecareus.docshare.ui.panels;
 import fr.ecareus.docshare.ui.shared.ThemeHelper;
 
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

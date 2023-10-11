@@ -2,9 +2,12 @@ package fr.ecareus.docshare.ui.shared;
 
 import fr.ecareus.docshare.ui.FrameManager;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,20 +74,12 @@ public class AppBar extends JPanel implements ActionListener {
 
         this.add(this.menuBar, gridBagConstraints);
 
-
-        JButton closeBtn = this.unpaintedButton("X");
         JPanel actionPane = new JPanel();
-        actionPane.setLayout(new GridLayout(1, 5));
         actionPane.setBackground(ThemeHelper.LIGHT_DARK);
-        actionPane.add(this.unpaintedButton(""));
-        actionPane.add(this.unpaintedButton(""));
-        actionPane.add(this.unpaintedButton(""));
-        actionPane.add(this.unpaintedButton("-"));
-        actionPane.add(closeBtn);
+        // TO-DO : add IconButtons to close, minimize, restore the window
 
         gridBagConstraints.weightx = 0.25;
         gridBagConstraints.gridx = 1;
-        closeBtn.setForeground(ThemeHelper.WHITE);
         this.add(actionPane, gridBagConstraints);
 
         this.addMouseListener(new MouseAdapter() {

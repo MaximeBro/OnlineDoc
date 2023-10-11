@@ -17,7 +17,6 @@ import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 public class FrameManager implements ICentered {
 
     private final JFrame frame;
-    private int xOffSet, yOffSet;
     private int mouseX, mouseY;
 
     public FrameManager() {
@@ -26,12 +25,12 @@ public class FrameManager implements ICentered {
         // try { UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); } catch (Exception e) { e.printStackTrace(); }
 
         this.frame = new JFrame();
-        this.frame.setLayout(new BorderLayout());
+        this.frame.setLayout(new BorderLayout(50, 50));
         this.frame.setUndecorated(true);
+        this.frame.setResizable(false);
 
         this.frame.setSize(new Dimension(1280, 720));
         this.frame.setLocation(this.getCenterLocation(1280, 720));
-
 
         this.frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
