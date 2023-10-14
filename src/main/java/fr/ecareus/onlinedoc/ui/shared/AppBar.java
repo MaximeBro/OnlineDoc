@@ -1,20 +1,16 @@
 package fr.ecareus.onlinedoc.ui.shared;
 
-import com.sun.prism.paint.Paint;
+import fr.ecareus.onlinedoc.models.User;
 import fr.ecareus.onlinedoc.ui.PanelManager;
-import javafx.geometry.HPos;
+import fr.ecareus.onlinedoc.ui.pages.UserAccountPage;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import org.kordamp.ikonli.javafx.FontIcon;
-
-import javax.swing.border.LineBorder;
 
 public class AppBar extends Panel {
 
@@ -38,18 +34,30 @@ public class AppBar extends Panel {
         titlePane.setTranslateY(10d);
         titlePane.getChildren().add(titleLbl);
 
+        Button minimizeBtn = new Button();
+        minimizeBtn.setBackground(null);
+        FontIcon miniIcon = new FontIcon("bi-dash");
+        miniIcon.setIconSize(32);
+        miniIcon.setIconColor(Color.WHITE);
+        minimizeBtn.setGraphic(miniIcon);
+        minimizeBtn.setAlignment(Pos.BASELINE_RIGHT);
+        minimizeBtn.setTranslateX(-45);
+        minimizeBtn.setOnMouseClicked(event -> this.manager.getStage().setIconified(true));
+        minimizeBtn.setOnMouseEntered(event -> miniIcon.setIconColor(Color.GRAY));
+        minimizeBtn.setOnMouseExited(event -> miniIcon.setIconColor(Color.WHITE));
+
         Button closeBtn = new Button();
         closeBtn.setBackground(null);
-        FontIcon icon = new FontIcon("bi-x");
-        icon.setIconSize(32);
-        icon.setIconColor(Color.WHITE);
-        closeBtn.setGraphic(icon);
+        FontIcon closeIcon = new FontIcon("bi-x");
+        closeIcon.setIconSize(32);
+        closeIcon.setIconColor(Color.WHITE);
+        closeBtn.setGraphic(closeIcon);
         closeBtn.setAlignment(Pos.BASELINE_RIGHT);
         closeBtn.setOnMouseClicked(event -> System.exit(0));
-        closeBtn.setOnMouseEntered(event -> icon.setIconColor(Color.GRAY));
-        closeBtn.setOnMouseExited(event -> icon.setIconColor(Color.WHITE));
+        closeBtn.setOnMouseEntered(event -> closeIcon.setIconColor(Color.GRAY));
+        closeBtn.setOnMouseExited(event -> closeIcon.setIconColor(Color.WHITE));
 
-        actionPane.getChildren().add(closeBtn);
+        actionPane.getChildren().addAll(minimizeBtn, closeBtn);
         setCanTakeAllSize(titlePane);
         topPane.add(titlePane, 0, 0);
         topPane.add(actionPane, 1, 0);
@@ -77,6 +85,13 @@ public class AppBar extends Panel {
         sessionMenu.getItems().addAll(browseSession, refreshSession);
 
         Menu accountMenu = new Menu("Compte");
+        MenuItem configAccount = new MenuItem("Configuration");
+        configAccount.setOnAction(e ->
+        {
+            UserAccountPage page = new UserAccountPage();
+            page.init(this.manager);
+        });
+        accountMenu.getItems().addAll(configAccount);
 
         MenuBar menuBar = new MenuBar();
         menuBar.setTranslateY(1d);
@@ -91,4 +106,6 @@ public class AppBar extends Panel {
     public String getName() {
         return "AppBar";
     }
+
+    public double getHeight() { return this.layout.getPrefHeight(); }
 }

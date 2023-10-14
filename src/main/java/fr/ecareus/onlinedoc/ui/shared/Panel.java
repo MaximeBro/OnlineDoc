@@ -32,6 +32,8 @@ public abstract class Panel implements IPanel, IPosition {
     @Override
     public abstract String getName();
 
+    public void refresh() {};
+
     @Override
     public void onShow() {
         FadeTransition transition = new FadeTransition(Duration.seconds(1), this.layout);

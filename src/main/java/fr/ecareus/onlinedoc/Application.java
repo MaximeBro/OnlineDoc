@@ -14,7 +14,11 @@ public class Application extends javafx.application.Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        PanelManager manager = new PanelManager(stage);
+        String osName = System.getProperty("os.name");
+        String userName = System.getProperty("user.name");
+        String configPath = osName.contains("Windows") ? "C:\\Users\\" + userName + "\\AppData\\Roaming\\OnlineDoc" : "/home/onlinedoc";
+
+        PanelManager manager = new PanelManager(stage, configPath);
         manager.init();
         manager.showPanel(new HomePage());
     }
