@@ -1,11 +1,10 @@
 package fr.ecareus.onlinedoc.ui;
 
 import fr.ecareus.onlinedoc.models.User;
+import fr.ecareus.onlinedoc.network.SessionManager;
 import fr.ecareus.onlinedoc.ui.shared.AppBar;
-import fr.ecareus.onlinedoc.ui.shared.IPanel;
 import fr.ecareus.onlinedoc.ui.shared.Panel;
 import javafx.geometry.VPos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
@@ -25,8 +24,10 @@ public class PanelManager {
     private final GridPane contentPane;
     private Panel currentPanel;
     private final User user;
+    private final SessionManager sessionManager;
 
-    public PanelManager(Stage stage, String appPath) {
+    public PanelManager(Stage stage, String appPath) throws IOException {
+        this.sessionManager = new SessionManager(this);
         this.stage = stage;
         this.path = appPath;
         this.user = new User(appPath + "\\Documents");
@@ -66,6 +67,7 @@ public class PanelManager {
 
         this.stage.getIcons().add(new Image("images/icon.png"));
         this.initConfig();
+        this.sessionManager.init();
     }
 
     public void showPanel(Panel panel) {
@@ -133,8 +135,6 @@ public class PanelManager {
     }
 
     public void saveConfig() {
-
-
 
     }
 

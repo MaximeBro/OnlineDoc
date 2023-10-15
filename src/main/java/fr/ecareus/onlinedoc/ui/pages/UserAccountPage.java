@@ -41,6 +41,7 @@ public class UserAccountPage extends Panel {
                              "-fx-border-color: white;");
 
         this.stage.centerOnScreen();
+        this.stage.initOwner(this.manager.getStage());
         this.stage.setScene(new Scene(this.layout));
         this.stage.initStyle(StageStyle.UNDECORATED);
         this.stage.toFront();
@@ -115,6 +116,7 @@ public class UserAccountPage extends Panel {
         this.layout.add(titlePane, 0, 0);
         this.layout.add(contentPane, 0, 1);
         this.layout.add(actionPane, 0, 2);
+        this.onShow();
     }
 
     @Override
