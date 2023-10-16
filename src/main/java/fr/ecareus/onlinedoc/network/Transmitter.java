@@ -13,8 +13,8 @@ import java.net.MulticastSocket;
 
 public class Transmitter extends Listener {
 
-    public Transmitter(InetAddress groupIp, int port, PanelManager manager) throws IOException {
-        super(groupIp, port, manager);
+    public Transmitter(InetAddress groupIp, int port, PanelManager manager, SessionManager session) throws IOException {
+        super(groupIp, port, manager, session);
 
         this.socket = new MulticastSocket();
         this.socket.setTimeToLive(15);

@@ -17,8 +17,8 @@ public class SessionManager {
         this.manager = manager;
         this.groupIp = InetAddress.getByName("230.125.10.15");
         this.port = 2009;
-        this.transmitter = new Transmitter(this.groupIp, this.port, this.manager);
-        this.receiver = new Receiver(this.groupIp, this.port, this.manager);
+        this.transmitter = new Transmitter(this.groupIp, this.port, this.manager, this);
+        this.receiver = new Receiver(this.groupIp, this.port, this.manager, this);
     }
 
     public void init() {

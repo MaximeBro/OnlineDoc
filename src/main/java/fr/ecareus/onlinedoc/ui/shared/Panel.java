@@ -9,6 +9,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.util.Duration;
 
+import java.lang.reflect.Type;
+
 public abstract class Panel implements IPanel, IPosition {
 
     protected GridPane layout = new GridPane();
@@ -22,6 +24,8 @@ public abstract class Panel implements IPanel, IPosition {
         this.manager = manager;
         setCanTakeAllSize(this.layout);
     }
+
+    public Type getType() { return super.getClass(); }
 
     @Override
     public GridPane getLayout() { return this.layout; }

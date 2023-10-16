@@ -1,5 +1,6 @@
 package fr.ecareus.onlinedoc.network.shared;
 
+import fr.ecareus.onlinedoc.network.SessionManager;
 import fr.ecareus.onlinedoc.ui.PanelManager;
 
 import java.io.IOException;
@@ -13,10 +14,13 @@ public abstract class Listener extends Thread {
     protected final PanelManager manager;
     protected MulticastSocket socket;
 
-    public Listener(InetAddress groupIp, int port, PanelManager manager) throws IOException {
+    protected final SessionManager session;
+
+    public Listener(InetAddress groupIp, int port, PanelManager manager, SessionManager session) throws IOException {
         this.groupIp = groupIp;
         this.port = port;
         this.manager = manager;
+        this.session = session;
     }
 
     @Override

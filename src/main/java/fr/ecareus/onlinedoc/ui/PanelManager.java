@@ -1,7 +1,8 @@
 package fr.ecareus.onlinedoc.ui;
 
-import fr.ecareus.onlinedoc.models.User;
+import fr.ecareus.onlinedoc.models.*;
 import fr.ecareus.onlinedoc.network.SessionManager;
+import fr.ecareus.onlinedoc.ui.pages.SessionsPage;
 import fr.ecareus.onlinedoc.ui.shared.AppBar;
 import fr.ecareus.onlinedoc.ui.shared.Panel;
 import javafx.geometry.VPos;
@@ -13,8 +14,9 @@ import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-import java.awt.*;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PanelManager {
 
@@ -23,18 +25,26 @@ public class PanelManager {
     private GridPane layout;
     private final GridPane contentPane;
     private Panel currentPanel;
-    private final User user;
+    private User user;
     private final SessionManager sessionManager;
+    private final List<AvailableSession> sessionList;
+    private Config config;
+    private Document currentDocument;
 
     public PanelManager(Stage stage, String appPath) throws IOException {
         this.sessionManager = new SessionManager(this);
         this.stage = stage;
         this.path = appPath;
-        this.user = new User(appPath + "\\Documents");
         contentPane = new GridPane();
+        this.sessionList = new ArrayList<>();
+        this.config = new Config();
     }
 
     public void init() {
+        this.config.init(this.path);
+        this.user = this.config.getUser();
+        this.sessionManager.init();
+
         this.stage.setTitle("OnlineDoc");
         this.stage.setWidth(1280);
         this.stage.setHeight(720);
@@ -66,8 +76,6 @@ public class PanelManager {
         });
 
         this.stage.getIcons().add(new Image("images/icon.png"));
-        this.initConfig();
-        this.sessionManager.init();
     }
 
     public void showPanel(Panel panel) {
@@ -87,55 +95,19 @@ public class PanelManager {
     public Stage getStage() { return this.stage; }
 
     public User getUser() { return user; }
-
-    private void initConfig() {
-        File configFolder = new File(this.path);
-        File docsFolder = new File(this.path + "\\Documents");
-        File configFile = new File(this.path + "\\config.cfg");
-
-        if(!configFolder.exists())
-            configFolder.mkdir();
-
-        if(!docsFolder.exists())
-            docsFolder.mkdir();
-
-        if(!configFile.exists()) {
-            try {
-                configFile.createNewFile();
-                Writer writer = new FileWriter(configFile, false);
-                String content = "# Configuration principale, ne pas modifier à moins que vous ne soyez certain de ce que vous faites.\n";
-
-                content += "\nuser=" + this.user.getName() + "\n";
-                content += "\ndocuments= [\n";
-                for(File document : new File(this.user.getDocumentsPath()).listFiles())
-                    content += " - " + "\"" + document.getName() + "\"\n";
-
-                content += "]\n";
-                content += "";
-
-                writer.write(content);
-                writer.flush();
-                writer.close();
-            } catch (IOException e) { e.printStackTrace(); }
-        } else {
-            try {
-                BufferedReader reader = new BufferedReader(new FileReader(configFile));
-                String line = reader.readLine();
-                while(line != null && line.length() > 0) {
-                    if(line.charAt(0) != '#' && line.contains("user=")) {
-                        this.user.setName(line.replace("user=", ""));
-                    }
-
-                    line = reader.readLine();
-                }
-
-                reader.close();
-            } catch (IOException e) { e.printStackTrace(); }
+    public void addSession(AvailableSession session) {
+        this.sessionList.add(session);
+        if(this.currentPanel.getType() instanceof SessionsPage) {
+            this.refresh();
         }
     }
 
-    public void saveConfig() {
+    public List<AvailableSession> getSessions() { return this.sessionList; }
 
+    public Document getCurrentDocument() { return this.currentDocument; }
+
+    public void saveConfig() {
+        this.config.save(this.path);
     }
 
     public void refresh() {

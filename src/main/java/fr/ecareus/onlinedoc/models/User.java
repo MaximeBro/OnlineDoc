@@ -18,6 +18,13 @@ public class User {
         this.docsFolder = path;
     }
 
+    public User(UUID id, String name, String path) {
+        this.id = id;
+        this.name = name;
+        this.docsFolder = path;
+        this.documents = new ArrayList<>();
+    }
+
     public String getName() { return this.name; }
     public void setName(String name) { this.name = name; }
 

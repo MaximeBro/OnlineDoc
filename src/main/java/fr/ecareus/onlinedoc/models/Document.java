@@ -20,6 +20,14 @@ public class Document {
         this.content = new ArrayList<>();
     }
 
+    public Document(UUID id, String title, User author) {
+        this.id = id;
+        this.title = title;
+        this.users = new ArrayList<>();
+        this.users.add(author);
+        this.content = new ArrayList<>();
+    }
+
     public UUID getId() { return id; }
 
     public String getTitle() { return title; }
