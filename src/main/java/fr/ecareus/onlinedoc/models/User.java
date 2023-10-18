@@ -34,4 +34,5 @@ public class User {
     public void setFolderPath(String path) { this.docsFolder = path; }
 
     public List<Document> getDocuments() { return this.documents; }
+    public void setDocuments(List<Document> documents) { this.documents = documents; }
 }

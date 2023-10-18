@@ -13,7 +13,7 @@ import java.lang.reflect.Type;
 
 public abstract class Panel implements IPanel, IPosition {
 
-    protected GridPane layout = new GridPane();
+    protected GridPane layout;
     protected PanelManager manager;
 
     public Panel() {

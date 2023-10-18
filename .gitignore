@@ -37,3 +37,7 @@ hs_err_pid*
 .idea/
 
 build/tmp/compileJava/
+
+build/resources/main/css/
+
+build/resources/main/images/

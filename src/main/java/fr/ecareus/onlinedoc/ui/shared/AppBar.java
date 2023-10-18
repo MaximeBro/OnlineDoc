@@ -2,6 +2,7 @@ package fr.ecareus.onlinedoc.ui.shared;
 
 import fr.ecareus.onlinedoc.models.User;
 import fr.ecareus.onlinedoc.ui.PanelManager;
+import fr.ecareus.onlinedoc.ui.pages.SessionsPage;
 import fr.ecareus.onlinedoc.ui.pages.UserAccountPage;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -82,6 +83,10 @@ public class AppBar extends Panel {
         Menu sessionMenu = new Menu("Connexion");
         MenuItem browseSession = new MenuItem("Sessions...");
         MenuItem refreshSession = new MenuItem("Relancer la session actuelle");
+        browseSession.setOnAction(e -> {
+            SessionsPage page = new SessionsPage();
+            page.init(this.manager);
+        });
         sessionMenu.getItems().addAll(browseSession, refreshSession);
 
         Menu accountMenu = new Menu("Compte");

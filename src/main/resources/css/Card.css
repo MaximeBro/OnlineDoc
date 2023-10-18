@@ -1,0 +1,16 @@
+.content {
+    -fx-background-image: url("/images/doc-card-icon.png");
+    -fx-background-size: 64 64;
+    -fx-background-position: center center;
+    -fx-background-repeat: no-repeat no-repeat;
+    -fx-border-radius: 8px;
+}
+
+.content-selected {
+    -fx-background-color: rgb(255, 255, 255);
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-border-width: 3;
+    -fx-border-style: solid;
+    -fx-border-color: #29BBFF;
+}

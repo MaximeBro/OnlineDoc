@@ -42,6 +42,7 @@ public class Config {
                 Reader reader = new FileReader(configFile);
                 Config config = this.gson.fromJson(reader, Config.class);
                 this.user = config.getUser();
+                this.user.setDocuments(config.getDocuments());
                 this.documents = config.getDocuments();
                 reader.close();
             } catch (IOException e) { e.printStackTrace(); }
